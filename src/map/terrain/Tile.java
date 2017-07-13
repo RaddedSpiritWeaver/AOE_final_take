@@ -16,6 +16,8 @@ public class Tile implements Serializable
     private int x,y;
     private Observable filler;
 
+    int i;
+
     private Map map;
     private String imageCode;
 
