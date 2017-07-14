@@ -1,10 +1,12 @@
 package map.map;
 
-import map.resource.Resource;
-import map.resource.ResourceType;
+import core.Core;
+import interFaces.Mobile;
+import interFaces.Observable;
 import map.terrain.TerrainType;
 import map.terrain.Tile;
 
+import javax.swing.*;
 import java.io.Serializable;
 import java.util.Vector;
 
@@ -12,48 +14,51 @@ import java.util.Vector;
  * Created by sarb on 5/29/17.
  */
 
-public class Map implements Serializable
+public class Map extends JLabel implements Serializable
 {
+    private Core core;
+
+    private int widthTiles;
+    private int heightTiles;
+
     private Tile tiles[][];
-    private int widthCoord;
-    private int heightCoord;
-
     private Vector<Mobile> mobiles;
+    private Vector<Observable> observables;
 
-    public Map(int widthCoord, int heightCoord)
+    public Map(Core core, int widthTiles, int heightTiles)
     {
-        this.widthCoord = widthCoord;
-        this.heightCoord = heightCoord;
+        this.core = core;
+
+        this.widthTiles = widthTiles;
+        this.heightTiles = heightTiles;
 
         mobiles = new Vector<>();
+        observables = new Vector<>();
 
-        tiles = new Tile[widthCoord][heightCoord];
-        for (int i = 0; i < widthCoord; i++)
-            for (int j = 0; j < heightCoord; j++)
-                tiles[i][j] = new Tile(TerrainType.SAND,i,j, this);
-
-        tiles[5][8].setFiller( new Resource(ResourceType.PALM,5,8) );
+        tiles = new Tile[widthTiles][heightTiles];
+        for (int i = 0; i < widthTiles; i++)
+            for (int j = 0; j < heightTiles; j++)
+                tiles[i][j] = new Tile(core,TerrainType.GRASS,i,j);
 
         updateAll();
     }
 
     public void updateAll()
     {
-        for (int i = 0; i < widthCoord; i++)
-            for (int j = 0; j < heightCoord; j++)
+        for (int i = 0; i < widthTiles; i++)
+            for (int j = 0; j < heightTiles; j++)
                 tiles[i][j].update();
     }
 
     public void replace(Map newMap)
     {
         this.tiles = newMap.getTiles();
-        this.widthCoord = newMap.getWidthCoord();
-        this.heightCoord = newMap.getHeightCoord();
+        this.widthTiles = newMap.getWidthTiles();
+        this.heightTiles = newMap.getHeightTiles();
     }
 
     public void addMobile(Mobile mobile)
     {
-//        canvas.addKeyListener(mobile);
         mobiles.add(mobile);
     }
 
@@ -62,24 +67,14 @@ public class Map implements Serializable
         return mobiles;
     }
 
-    public Canvas getCanvas()
+    public int getWidthTiles()
     {
-        return canvas;
+        return widthTiles;
     }
 
-    public void setCanvas(Canvas canvas)
+    public int getHeightTiles()
     {
-        this.canvas = canvas;
-    }
-
-    public int getWidthCoord()
-    {
-        return widthCoord;
-    }
-
-    public int getHeightCoord()
-    {
-        return heightCoord;
+        return heightTiles;
     }
 
     public Tile getTile(int x, int y)

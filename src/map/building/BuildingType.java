@@ -9,39 +9,20 @@ import java.awt.*;
  */
 public enum BuildingType
 {
-    BUILDING1(new Color(0,139, 120), TerrainType.GRASS,4500),
-    BUILDING2(new Color(51, 50, 41), TerrainType.SAND,5000),
-    BUILDING3(new Color(31, 50, 41), TerrainType.MOUNTAIN,5000),
-    BUILDING4(new Color(21, 50, 41), TerrainType.GRASS,5000),
-    BUILDING5(new Color(11, 50, 41), TerrainType.GRASS,5000),
-    BUILDING6(new Color(85, 50, 41), TerrainType.GRASS,5000);
+    SAWMILL(new Color(0,139, 120), TerrainType.GRASS),
+    QUARRY(new Color(51, 50, 41), TerrainType.SAND),
+    CASTLE(new Color(31, 50, 41), TerrainType.MOUNTAIN),
+    BARRAKS(new Color(21, 50, 41), TerrainType.GRASS),
+    PORT(new Color(11, 50, 41), TerrainType.GRASS),
+    NOTHING(new Color(85, 50, 41), TerrainType.GRASS);
 
     private Color color;
     private TerrainType availableTerrain;
 
-    private int maxhealth;
-    public int getMaxhealth(){
-        return maxhealth;
-    }
-    public int getHealth() {
-        return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
-    private int health;
-
-    /////////////////////
-    //private int cost;
-
-    BuildingType(Color color, TerrainType terrainType, int health)
+    BuildingType(Color color, TerrainType terrainType)
     {
         this.color = color;
         this.availableTerrain = terrainType;
-        this.health = health;
-        maxhealth = health;
     }
 
     public TerrainType getAvailableTerrain() {
